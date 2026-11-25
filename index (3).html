@@ -1,0 +1,586 @@
+<!doctype html>
+<html lang="mn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#070E26">
+<title>Хүслийн дугтуй</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{--mid:#0B1535;--snow:#F6F9FF;--gold:#E6CF9B;--gold2:#F1DFB0;--green:#134E3A;--burg:#6E1423;--mute:#D5DCF0}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0}
+body{min-height:100vh;min-height:100dvh;background:#070E26;color:var(--snow);font-family:'Manrope',system-ui,sans-serif;overflow-x:hidden}
+.h{font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;margin:0;color:var(--gold2)}
+button,input,textarea{font-family:inherit}
+.env{position:fixed;inset:0;z-index:0;opacity:0;transition:opacity .9s ease;pointer-events:none}
+.env.on{opacity:1}
+#e-home{background:radial-gradient(circle at 50% 26%,rgba(230,207,155,.2),transparent 55%),linear-gradient(180deg,#070E26,#0B1535 55%,#162663)}
+#e-letter{background:radial-gradient(circle at 50% 18%,rgba(230,207,155,.22),transparent 50%),radial-gradient(circle at 50% 100%,rgba(110,20,35,.5),transparent 60%),linear-gradient(180deg,#070E26,#0B1535 55%,#1A1B4A)}
+#e-tree{background:radial-gradient(circle at 50% 30%,rgba(230,207,155,.2),transparent 52%),linear-gradient(180deg,#070E26,#0B1535 50%,#10351F)}
+#e-auth{background:radial-gradient(circle at 50% 0%,rgba(230,207,155,.18),transparent 50%),linear-gradient(180deg,#070E26,#102052 60%,#0B1535)}
+#e-prof{background:radial-gradient(circle at 80% 8%,rgba(230,207,155,.2),transparent 45%),radial-gradient(circle at 10% 100%,rgba(19,78,58,.5),transparent 55%),linear-gradient(180deg,#070E26,#0B1535)}
+.stars{position:fixed;inset:0;z-index:1;pointer-events:none;background:radial-gradient(1.5px 1.5px at 12% 6%,#fff 50%,transparent 51%),radial-gradient(1.5px 1.5px at 80% 9%,#fff 50%,transparent 51%),radial-gradient(1px 1px at 46% 4%,#fff 50%,transparent 51%),radial-gradient(1px 1px at 92% 24%,#E6CF9B 50%,transparent 51%),radial-gradient(1px 1px at 6% 30%,#fff 50%,transparent 51%),radial-gradient(1.5px 1.5px at 64% 16%,#E6CF9B 50%,transparent 51%)}
+#snow{position:fixed;inset:0;width:100%;height:100%;z-index:40;pointer-events:none}
+#garland{position:fixed;left:0;right:0;top:0;height:40px;z-index:35;pointer-events:none}
+.bulb{position:absolute;width:9px;height:9px;border-radius:50%;animation:tw 2.4s ease-in-out infinite}
+@keyframes tw{0%,100%{opacity:.5}50%{opacity:1}}
+.tw{animation:tw 2.8s ease-in-out infinite}
+.sway{transform-box:fill-box;transform-origin:50% 0;animation:sw 4s ease-in-out infinite}
+@keyframes sw{0%,100%{transform:rotate(-3deg)}50%{transform:rotate(3deg)}}
+#app{position:relative;z-index:10;max-width:480px;margin:0 auto;padding:56px 22px 120px}
+.screen{display:none}
+.screen.on{display:block;animation:in .55s ease both}
+@keyframes in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.cap{position:relative}
+.cap::before{content:"";position:absolute;left:-3px;right:-3px;top:-11px;height:22px;pointer-events:none;z-index:2;border-radius:14px 14px 2px 2px;background:radial-gradient(circle at 9% 14px,#fff 0 6px,transparent 6.5px),radial-gradient(circle at 26% 16px,#fff 0 4px,transparent 4.5px),radial-gradient(circle at 47% 15px,#fff 0 7px,transparent 7.5px),radial-gradient(circle at 69% 16px,#fff 0 4.5px,transparent 5px),radial-gradient(circle at 90% 14px,#fff 0 6px,transparent 6.5px),linear-gradient(180deg,#fff 0,#E9F0FB 13px,transparent 13px);filter:drop-shadow(0 0 5px rgba(255,255,255,.45)) drop-shadow(0 2px 2px rgba(7,14,38,.4))}
+.cap::after{content:"";position:absolute;left:16%;top:-17px;width:30%;height:12px;border-radius:14px 14px 0 0;background:linear-gradient(180deg,#fff,#EAF1FB);z-index:2;pointer-events:none;filter:drop-shadow(0 0 4px rgba(255,255,255,.5))}
+.cap-c::before{left:18px;right:18px}
+.cap-c::after{left:24%;width:22%}
+.btn{display:flex;width:100%;align-items:center;justify-content:center;gap:8px;min-height:56px;border:0;border-radius:16px;font:700 17px 'Manrope',sans-serif;cursor:pointer;transition:transform .25s ease,opacity .2s}
+.btn:active{transform:scale(.98)}
+.btn:disabled{opacity:.5}
+.btn:focus-visible,.nav-i:focus-visible,.mus:focus-visible,.back:focus-visible,.tab:focus-visible,[data-i]:focus-visible{outline:2px solid var(--gold2);outline-offset:4px}
+.gold{background:linear-gradient(180deg,#F4E4B8,#C9A961);color:#0B1535;box-shadow:0 8px 24px rgba(230,207,155,.28),inset 0 1px 0 rgba(255,255,255,.6)}
+.greenb{background:linear-gradient(180deg,#1E7355,#0F3D2E);color:var(--snow);border:1px solid rgba(230,207,155,.4);box-shadow:0 8px 24px rgba(19,78,58,.5)}
+.ghost{background:rgba(246,249,255,.06);color:var(--gold);border:1px solid rgba(230,207,155,.55)}
+.stack{display:flex;flex-direction:column;gap:24px;margin-top:30px;padding-top:12px}
+.card{border-radius:22px;background:linear-gradient(160deg,rgba(26,41,94,.92),rgba(11,21,53,.94));border:1px solid rgba(230,207,155,.28);box-shadow:0 18px 40px rgba(0,0,10,.45),inset 0 1px 0 rgba(255,255,255,.08)}
+.chip{display:inline-flex;align-items:center;min-height:28px;padding:0 12px;border-radius:999px;border:1px solid rgba(230,207,155,.5);color:var(--gold);font:600 12px 'Manrope',sans-serif}
+#musBtn{position:fixed;top:48px;right:16px;z-index:45;width:48px;height:48px;border-radius:50%;border:1px solid rgba(230,207,155,.6);background:rgba(11,21,53,.85);color:var(--gold2);display:inline-flex;align-items:center;justify-content:center;cursor:pointer}
+#musBtn .off{display:none}
+#musBtn[aria-pressed="false"] .on{display:none}
+#musBtn[aria-pressed="false"] .off{display:block}
+.back{width:44px;height:44px;border-radius:50%;border:1px solid rgba(230,207,155,.6);background:rgba(246,249,255,.08);color:var(--gold2);display:inline-flex;align-items:center;justify-content:center;cursor:pointer;flex:none}
+.row{display:flex;align-items:center;gap:14px}
+.pagetitle{font-size:34px;line-height:1.05}
+.hero{display:flex;flex-direction:column;align-items:center;text-align:center;margin-top:6px}
+.hero h1{font-size:46px;line-height:1.05;margin-top:8px}
+.hero p{margin:10px 0 0;font-size:15px;line-height:1.5;color:var(--mute);max-width:300px}
+.cdbox{margin-top:30px;padding:16px 16px 14px;display:flex;flex-direction:column;gap:10px}
+.cdhead{display:flex;align-items:center;gap:8px;font-size:14px;font-weight:600;color:var(--gold)}
+.cds{display:flex;gap:8px}
+.cd{flex:1;display:flex;flex-direction:column;align-items:center;padding:10px 0;border-radius:14px;background:rgba(246,249,255,.07);border:1px solid rgba(230,207,155,.35)}
+.cd b{font:600 30px/1 'Cormorant Garamond',Georgia,serif;color:var(--gold2)}
+.cd span{font-size:11px;color:var(--mute);margin-top:2px}
+.opened-only{display:none}
+body.open .opened-only{display:flex}
+body.open .sealed-only{display:none}
+.paper{border-radius:20px;background:linear-gradient(180deg,#FBF7EC,#F1E8D2);color:#0B1535;box-shadow:0 18px 40px rgba(0,0,10,.5),inset 0 0 0 1px rgba(201,169,97,.6);padding:22px 22px 20px;margin-top:34px;display:flex;flex-direction:column;gap:6px}
+.plabel{font-size:13px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--burg)}
+.pf{width:100%;border:0;border-bottom:1px solid #C9A961;background:transparent;color:#0B1535;font:500 16px 'Manrope',sans-serif;padding:8px 0;min-height:44px;border-radius:0}
+.pf::placeholder{color:#5B6482}
+.pf:focus{outline:none;border-bottom-color:var(--burg)}
+.pa{resize:none;line-height:30px;min-height:150px;background-image:linear-gradient(transparent 29px,rgba(201,169,97,.55) 29px);background-size:100% 30px}
+.pcheck{display:flex;align-items:center;gap:12px;min-height:44px;margin-top:6px;font-size:15px;font-weight:600;color:var(--green)}
+.pcheck input{width:22px;height:22px;accent-color:var(--burg);margin:0}
+.pnote{font-size:13px;line-height:1.4;color:#5B6482}
+.err{min-height:20px;margin-top:10px;font-size:14px;font-weight:600;color:#FF9AA8}
+.field{width:100%;min-height:52px;padding:0 16px;border-radius:14px;border:1px solid rgba(230,207,155,.4);background:rgba(246,249,255,.07);color:var(--snow);font:500 16px 'Manrope',sans-serif}
+.field::placeholder{color:#AEB9D8}
+.field:focus{outline:2px solid var(--gold2);outline-offset:2px}
+.flab{display:block;font-size:14px;font-weight:600;color:var(--gold);margin:14px 0 8px}
+.tabs{display:flex;gap:10px;margin-top:26px}
+.tab{flex:1;min-height:48px;border-radius:14px;border:1px solid rgba(230,207,155,.45);background:rgba(246,249,255,.05);color:var(--gold);font:700 15px 'Manrope',sans-serif;cursor:pointer}
+.tab[aria-selected="true"]{background:linear-gradient(180deg,#F4E4B8,#C9A961);color:#0B1535}
+#nav{position:fixed;left:50%;transform:translateX(-50%);bottom:0;width:min(100%,480px);z-index:30;display:none;justify-content:space-around;padding:14px 8px calc(10px + env(safe-area-inset-bottom));background:linear-gradient(180deg,rgba(26,41,94,.97),rgba(7,14,38,.99));border-top:1px solid rgba(230,207,155,.3)}
+#nav.on{display:flex}
+.nav-i{background:none;border:0;color:#AEB9D8;font:600 11px 'Manrope',sans-serif;display:flex;flex-direction:column;align-items:center;gap:4px;min-width:72px;min-height:48px;padding:4px 6px;cursor:pointer}
+.nav-i[aria-current="page"]{color:var(--gold2)}
+.treewrap{display:flex;justify-content:center;margin-top:8px}
+.treewrap svg{max-width:100%;height:auto}
+[data-i]{cursor:pointer}
+.lrow{display:flex;gap:12px;align-items:flex-start;padding:16px 16px 14px;margin-top:14px}
+.lrow svg{flex:none;margin-top:2px;color:var(--gold)}
+.lmeta{font-size:12px;color:var(--gold);font-weight:600;letter-spacing:.04em}
+.lbody{margin:6px 0 0;font-size:16px;line-height:1.55;color:var(--snow);white-space:pre-wrap;word-break:break-word}
+.sub{font:700 13px 'Manrope',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin:26px 0 0}
+.lnk{padding:14px 16px;word-break:break-all;font-size:14px;color:var(--gold2);margin-top:10px}
+.setrow{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 18px;margin-top:18px}
+.sw{position:relative;width:56px;height:32px;border-radius:999px;border:1px solid rgba(230,207,155,.6);background:rgba(246,249,255,.08);cursor:pointer;flex:none}
+.sw i{position:absolute;top:3px;left:3px;width:24px;height:24px;border-radius:50%;background:var(--gold);transition:transform .25s}
+.sw[aria-pressed="true"]{background:#1E7355}
+.sw[aria-pressed="true"] i{transform:translateX(24px)}
+#storyCanvas{width:100%;max-width:320px;height:auto;display:block;margin:26px auto 0;border-radius:18px;border:1px solid rgba(230,207,155,.4);box-shadow:0 18px 40px rgba(0,0,10,.5)}
+#modal{position:fixed;inset:0;z-index:50;display:none;align-items:center;justify-content:center;padding:24px;background:rgba(3,6,20,.7)}
+#modal.on{display:flex;animation:in .3s ease both}
+#modal .card{width:100%;max-width:400px;padding:26px 22px 22px}
+#toast{position:fixed;left:50%;bottom:96px;transform:translateX(-50%) translateY(20px);z-index:60;max-width:88%;padding:12px 18px;border-radius:14px;background:#F6F9FF;color:#0B1535;font:600 14px 'Manrope',sans-serif;opacity:0;pointer-events:none;transition:all .3s}
+#toast.on{opacity:1;transform:translateX(-50%)}
+.center{text-align:center}
+.mt{margin-top:18px}
+@media (prefers-reduced-motion:reduce){.bulb,.tw,.sway{animation:none}.screen.on{animation:none}}
+</style>
+</head>
+<body>
+<div class="env on" id="e-home"></div><div class="env" id="e-letter"></div><div class="env" id="e-tree"></div><div class="env" id="e-auth"></div><div class="env" id="e-prof"></div>
+<div class="stars" aria-hidden="true"></div>
+<canvas id="snow" aria-hidden="true"></canvas>
+<div id="garland" aria-hidden="true"></div>
+
+<button id="musBtn" class="cap" aria-label="Хөгжим асаах/унтраах" aria-pressed="false">
+<svg class="on" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/></svg>
+<svg class="off" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9 18V5l11-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="17" cy="16" r="3"/><path d="M3 3l18 18"/></svg>
+</button>
+
+<main id="app">
+<section id="s-home" class="screen on" aria-label="Нүүр">
+<div class="hero">
+<div id="heroTree"></div>
+<h1 class="h">Хүслийн дугтуй</h1>
+<p>Шинэ жилийн хүслээ дугтуйлж, цасан шөнөд илгээгээрэй.</p>
+</div>
+<div class="stack">
+<button class="btn gold cap" data-go="letter">Хүсэл бичих</button>
+<button class="btn greenb cap" data-go="tree">Миний гацуур</button>
+</div>
+<div class="card cap cap-c cdbox" id="cdHome"></div>
+</section>
+
+<section id="s-letter" class="screen" aria-label="Хүсэл бичих">
+<div class="row"><button class="back cap" data-go="home" aria-label="Буцах"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button><h1 class="h pagetitle">Хүсэл бичих</h1></div>
+<div id="letterForm">
+<div class="paper cap cap-c">
+<label class="plabel" for="to">Хэнд (хэрэглэгчийн нэр)</label>
+<input id="to" class="pf" type="text" autocapitalize="none" autocomplete="off" maxlength="20" placeholder="жишээ: telmuun">
+<label class="plabel" for="msg" style="margin-top:10px">Хүсэл</label>
+<textarea id="msg" class="pf pa" rows="5" maxlength="500" placeholder="Шинэ жилийн хүслээ энд бичнэ үү..."></textarea>
+<div class="pnote" id="cnt">0 / 500</div>
+<label class="pcheck" for="anon"><input id="anon" type="checkbox" checked>Нэрээ нууцлах</label>
+<div id="fromWrap" style="display:none"><label class="plabel" for="from">Таны нэр</label><input id="from" class="pf" type="text" maxlength="30" placeholder="Нэрээ бичнэ үү"></div>
+<span class="pnote">Дугтуй 12-р сарын 31-ны 00:00 цагт л нээгдэнэ.</span>
+</div>
+<div class="err" id="lerr" role="alert"></div>
+<div class="stack" style="margin-top:14px"><button class="btn gold cap" id="sendBtn">Дугтуйлах</button></div>
+</div>
+<div id="letterDone" style="display:none" class="center">
+<div id="doneTree" class="treewrap"></div>
+<h2 class="h" style="font-size:34px;margin-top:8px">Дугтуй битүүмжлэгдлээ</h2>
+<p style="color:var(--mute);line-height:1.6;margin:10px 0 0">Хүсэл 12-р сарын 31-ны 00:00 цагт нээгдэнэ.</p>
+<div class="stack"><button class="btn gold cap" id="againBtn">Дахин бичих</button><button class="btn ghost cap" data-go="home">Нүүр</button></div>
+</div>
+</section>
+
+<section id="s-auth" class="screen" aria-label="Нэвтрэх">
+<div class="row"><button class="back cap" data-go="home" aria-label="Буцах"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button><h1 class="h pagetitle">Нэвтрэх</h1></div>
+<p style="color:var(--mute);line-height:1.6;margin:16px 0 0">Өөрийн гацуурыг үүсгэж, танд ирсэн дугтуйг 12/31 00:00-д нээнэ.</p>
+<div class="tabs" role="tablist">
+<button class="tab cap" role="tab" id="tabLogin" aria-selected="true">Нэвтрэх</button>
+<button class="tab cap" role="tab" id="tabReg" aria-selected="false">Бүртгүүлэх</button>
+</div>
+<form id="authForm" novalidate>
+<label class="flab" for="au">Хэрэглэгчийн нэр</label>
+<input id="au" class="field" type="text" autocapitalize="none" autocomplete="username" maxlength="20" placeholder="a-z, 0-9, _">
+<label class="flab" for="ap">Нууц үг</label>
+<input id="ap" class="field" type="password" autocomplete="current-password" placeholder="дор хаяж 6 тэмдэгт">
+<div class="err" id="aerr" role="alert"></div>
+<div class="stack" style="margin-top:12px"><button class="btn gold cap" type="submit" id="authBtn">Нэвтрэх</button></div>
+</form>
+</section>
+
+<section id="s-tree" class="screen" aria-label="Гацуур">
+<div class="row" style="justify-content:space-between;padding-right:56px"><h1 class="h pagetitle">Хүслийн гацуур</h1></div>
+<div class="treewrap"><div id="bigTree"></div></div>
+<div class="card cap cap-c cdbox" id="cdTree"></div>
+<h2 class="sub">Гацуураа чимэх</h2>
+<div class="card cap cap-c" style="padding:6px 16px 18px;margin-top:12px" id="opts"></div>
+<h2 class="sub" id="listTitle">Танд ирсэн дугтуй</h2>
+<div id="lettersList"></div>
+</section>
+
+<section id="s-profile" class="screen" aria-label="Профайл">
+<h1 class="h pagetitle" style="padding-right:56px">Профайл</h1>
+<div class="card cap cap-c" style="margin-top:30px;padding:18px 20px">
+<span class="chip">Хэрэглэгч</span>
+<div class="h" style="font-size:34px;margin-top:8px" id="pName">@</div>
+</div>
+<h2 class="sub">Миний линк</h2>
+<div class="card lnk" id="pLink"></div>
+<div class="stack" style="gap:24px;margin-top:20px">
+<button class="btn gold cap" id="copyBtn">Линк хуулах</button>
+<button class="btn greenb cap" data-go="story">Сторид оруулах</button>
+</div>
+<div class="card cap cap-c setrow"><div><b style="font-size:16px">Хөгжим</b><div style="font-size:13px;color:var(--mute);margin-top:2px">Шинэ жилийн аялгуу</div></div><button class="sw" id="musSw" role="switch" aria-label="Хөгжим" aria-pressed="false"><i></i></button></div>
+<div class="stack" style="margin-top:20px"><button class="btn ghost cap" id="outBtn">Гарах</button></div>
+</section>
+
+<section id="s-story" class="screen" aria-label="Сторигийн зураг">
+<div class="row"><button class="back cap" data-go="profile" aria-label="Буцах"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button><h1 class="h pagetitle">Сторид зориулсан</h1></div>
+<canvas id="storyCanvas" width="1080" height="1920" role="img" aria-label="Надад захиа илгээгээрэй сторигийн зураг"></canvas>
+<div class="stack"><button class="btn gold cap" id="shareImg">Сторид оруулах</button><button class="btn greenb cap" id="saveImg">Зураг хадгалах</button><button class="btn ghost cap" id="copyBtn2">Линк хуулах</button></div>
+</section>
+</main>
+
+<nav id="nav" class="cap cap-c" aria-label="Үндсэн цэс">
+<button class="nav-i" data-go="home" aria-current="page"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 11l8-7 8 7v9a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z"/></svg>Нүүр</button>
+<button class="nav-i" data-go="tree"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l5 7h-3l4 6H6l4-6H7z"/><path d="M12 16v5"/></svg>Гацуур</button>
+<button class="nav-i" data-go="profile"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>Профайл</button>
+</nav>
+
+<div id="modal" role="dialog" aria-modal="true" aria-label="Дугтуй"><div class="card cap cap-c" id="modalCard"></div></div>
+<div id="toast" role="status"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.57.4/dist/umd/supabase.js"></script>
+<script>
+const SUPABASE_URL = 'https://pybytxrjnkwozlcfsbwy.supabase.co';
+const SUPABASE_KEY = 'sb_publishable_z_pArR3cfJWRfGjQqVdSGw_ASEIHIgK';
+const OPEN_AT = new Date('2026-12-31T00:00:00+08:00');
+const DOMAIN = '@dugtui.app';
+const $ = (id) => document.getElementById(id);
+const CONFIGURED = !SUPABASE_URL.includes('PASTE');
+let sb = null;
+try { if (CONFIGURED && window.supabase) sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY); } catch (e) { sb = null; }
+let me = null, mode = 'login', after = null, cur = 'home';
+let sealed = [], letters = [];
+
+function el(tag, cls, text) { const n = document.createElement(tag); if (cls) n.className = cls; if (text != null) n.textContent = text; return n; }
+function toast(m) { const t = $('toast'); t.textContent = m; t.classList.add('on'); clearTimeout(toast.t); toast.t = setTimeout(() => t.classList.remove('on'), 2600); }
+function isOpen() { return Date.now() >= OPEN_AT.getTime(); }
+const pad = (n) => String(n).padStart(2, '0');
+
+/* ---------- ӨНГӨ, ЦАС, ГЭРЭЛ ---------- */
+(function garland() {
+  const g = $('garland'), cols = ['#F4E4B8', '#C2354B', '#FFFFFF'], n = 16;
+  for (let i = 0; i < n; i++) {
+    const b = el('div', 'bulb'), c = cols[i % 3];
+    b.style.cssText = `left:${((i + .5) / n * 100).toFixed(2)}%;top:${8 + (i % 2) * 14}px;background:${c};box-shadow:0 0 12px 3px ${c}99;animation-delay:-${(i * .37).toFixed(2)}s`;
+    g.appendChild(b);
+  }
+})();
+(function snow() {
+  const c = $('snow'), x = c.getContext('2d');
+  const reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let W = 0, H = 0, P = [], dpr = Math.min(window.devicePixelRatio || 1, 2);
+  function size() {
+    W = innerWidth; H = innerHeight;
+    c.width = W * dpr; c.height = H * dpr; x.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const n = reduce ? 25 : Math.min(70, Math.round(W / 6));
+    while (P.length < n) P.push({ x: Math.random() * W, y: Math.random() * H, r: 1 + Math.random() * 2.6, s: .4 + Math.random() * .9, d: Math.random() * 6.28, a: .4 + Math.random() * .55 });
+    P.length = n;
+  }
+  size(); addEventListener('resize', size);
+  let last = 0;
+  function frame(t) {
+    const dt = Math.min(40, t - last || 16); last = t;
+    x.clearRect(0, 0, W, H);
+    for (const p of P) {
+      p.y += p.s * dt * .04; p.d += dt * .0008; p.x += Math.sin(p.d) * .35;
+      if (p.y > H + 6) { p.y = -6; p.x = Math.random() * W; }
+      if (p.x > W + 6) p.x = -6; if (p.x < -6) p.x = W + 6;
+      x.globalAlpha = p.a; x.fillStyle = '#fff'; x.shadowColor = 'rgba(255,255,255,.7)'; x.shadowBlur = 5;
+      x.beginPath(); x.arc(p.x, p.y, p.r, 0, 6.283); x.fill();
+    }
+    requestAnimationFrame(frame);
+  }
+  requestAnimationFrame(frame);
+})();
+
+/* ---------- ГАЦУУР SVG ---------- */
+const SLOTS = [[150, 74], [128, 104], [172, 104], [112, 140], [150, 136], [188, 140], [122, 182], [160, 176], [196, 184], [106, 214], [150, 210], [196, 214]];
+const LIGHTS = { gold: ['#F4E4B8'], multi: ['#F4E4B8', '#E0566B', '#7FD1AE', '#9DBBFF'], white: ['#FFFFFF'] };
+const ORN = { gold: ['#E6CF9B', '#B8923F'], red: ['#C23048', '#6E1423'], silver: ['#EEF3FC', '#9AA7C8'] };
+let CFG = { light: 'gold', orn: 'gold', top: 'star' };
+try { Object.assign(CFG, JSON.parse(localStorage.getItem('dugtui_tree') || '{}')); } catch (e) { }
+const CURVES = [[[104, 70], [150, 92], [196, 66]], [[92, 142], [150, 170], [208, 138]], [[78, 210], [150, 242], [222, 206]]];
+const BALLS = [[118, 160], [182, 158], [140, 198], [178, 202], [98, 232], [128, 238], [172, 238], [204, 232], [150, 120], [132, 62], [168, 62]];
+function lightPts() {
+  const out = []; CURVES.forEach((c, k) => { const n = 8 + k * 2; for (let i = 0; i <= n; i++) { const t = i / n, u = 1 - t; out.push([u * u * c[0][0] + 2 * u * t * c[1][0] + t * t * c[2][0], u * u * c[0][1] + 2 * u * t * c[1][1] + t * t * c[2][1]]); } });
+  return out;
+}
+function treeSVG(w, h, label) {
+  const lc = LIGHTS[CFG.light] || LIGHTS.gold, oc = ORN[CFG.orn] || ORN.gold;
+  let lights = '', balls = '';
+  lightPts().forEach((p, i) => { const c = lc[i % lc.length]; lights += `<circle cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="6.5" fill="${c}" opacity=".22"/><circle class="tw" style="animation-delay:-${(i * .31).toFixed(2)}s" cx="${p[0].toFixed(1)}" cy="${p[1].toFixed(1)}" r="2.7" fill="${c}"/>`; });
+  BALLS.forEach((p, i) => { balls += `<circle cx="${p[0]}" cy="${p[1]}" r="6" fill="${oc[0]}" stroke="${oc[1]}" stroke-width="1.4"/><circle cx="${p[0] - 2}" cy="${p[1] - 2}" r="1.8" fill="#fff" opacity=".75"/>`; });
+  const top = CFG.top === 'bow'
+    ? '<path d="M150 30 L128 14 Q124 28 150 30 Z" fill="#8A1C2E" stroke="#E6CF9B" stroke-width="1"/><path d="M150 30 L172 14 Q176 28 150 30 Z" fill="#8A1C2E" stroke="#E6CF9B" stroke-width="1"/><circle cx="150" cy="30" r="5" fill="#E6CF9B"/><path d="M146 34 L136 52 M154 34 L164 52" stroke="#8A1C2E" stroke-width="4" stroke-linecap="round"/>'
+    : '<circle cx="150" cy="24" r="22" fill="#F4E4B8" opacity=".18"/><polygon points="150,8 154.5,19 166,19 157,26 160.5,38 150,31 139.5,38 143,26 134,19 145.5,19" fill="#F1DFB0"/>';
+  return `<svg viewBox="0 0 300 330" width="${w}" height="${h}" role="img" aria-label="${label}">
+${top}
+<polygon points="150,28 208,106 92,106" fill="#1E7355"/><polygon points="150,70 224,170 76,170" fill="#176148"/><polygon points="150,126 240,244 60,244" fill="#134E3A"/>
+<ellipse cx="150" cy="106" rx="58" ry="6" fill="#fff"/><ellipse cx="150" cy="170" rx="74" ry="7" fill="#fff"/><ellipse cx="150" cy="244" rx="90" ry="8" fill="#fff"/>
+<rect x="140" y="244" width="20" height="22" fill="#6E1423"/><ellipse cx="150" cy="288" rx="126" ry="16" fill="#F6F9FF"/>
+${CURVES.map((c) => `<path d="M${c[0]} Q${c[1]} ${c[2]}" fill="none" stroke="#F4E4B8" stroke-opacity=".55" stroke-width="1.2"/>`).join('')}
+${lights}${balls}
+<rect x="24" y="262" width="44" height="34" rx="3" fill="#6E1423"/><rect x="43" y="262" width="5" height="34" fill="#E6CF9B"/><ellipse cx="39" cy="258" rx="8" ry="5" fill="#E6CF9B"/><ellipse cx="52" cy="258" rx="8" ry="5" fill="#E6CF9B"/>
+<rect x="236" y="268" width="40" height="30" rx="3" fill="#134E3A" stroke="#E6CF9B" stroke-opacity=".5"/><rect x="253" y="268" width="5" height="30" fill="#F4E4B8"/><ellipse cx="249" cy="264" rx="8" ry="5" fill="#F4E4B8"/><ellipse cx="262" cy="264" rx="8" ry="5" fill="#F4E4B8"/>
+<g class="orns"></g></svg>`;
+}
+function ornaments(svgWrap, n, clickable) {
+  const g = svgWrap.querySelector('.orns'); let s = '';
+  for (let i = 0; i < Math.min(n, SLOTS.length); i++) {
+    const [x, y] = SLOTS[i], a = i % 2 ? ['#F4E4B8', '#8A1C2E'] : ['#F6F9FF', '#C9A961'];
+    s += `<g transform="translate(${x},${y})"${clickable ? ` data-i="${i}" tabindex="0" role="button" aria-label="Дугтуй ${i + 1}"` : ''}><g class="sway" style="animation-delay:-${(i * .7).toFixed(1)}s"><line x1="0" y1="0" x2="0" y2="10" stroke="#E6CF9B"/><rect x="-12" y="10" width="24" height="17" rx="2" fill="${a[0]}"/><path d="M-12 10l12 9 12-9" fill="none" stroke="${a[1]}" stroke-width="1.4"/><circle cx="0" cy="22" r="5" fill="#8A1C2E" stroke="#E6CF9B"/></g></g>`;
+  }
+  g.innerHTML = s;
+}
+(function initTrees() {
+  const h = $('heroTree'); h.innerHTML = treeSVG(190, 209, 'Шинэ жилийн гацуур'); ornaments(h, 5, false);
+  const d = $('doneTree'); d.innerHTML = treeSVG(200, 220, 'Дугтуй битүүмжлэгдлээ'); ornaments(d, 6, false);
+})();
+
+/* ---------- ТООЛУУР ---------- */
+function cdHTML() {
+  return `<div class="cdhead sealed-only"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>Дугтуй 12-р сарын 31-ны 00:00 цагт нээгдэнэ</div>
+<div class="cdhead opened-only">Дугтуйнууд нээгдлээ. Шинэ жилийн мэнд!</div>
+<div class="cds sealed-only"><div class="cd"><b class="cD">00</b><span>өдөр</span></div><div class="cd"><b class="cH">00</b><span>цаг</span></div><div class="cd"><b class="cM">00</b><span>мин</span></div><div class="cd"><b class="cS">00</b><span>сек</span></div></div>`;
+}
+$('cdHome').innerHTML = cdHTML(); $('cdTree').innerHTML = cdHTML();
+let wasOpen = isOpen();
+function tick() {
+  const ms = Math.max(0, OPEN_AT.getTime() - Date.now());
+  const v = { cD: pad(Math.floor(ms / 864e5)), cH: pad(Math.floor(ms / 36e5) % 24), cM: pad(Math.floor(ms / 6e4) % 60), cS: pad(Math.floor(ms / 1e3) % 60) };
+  for (const k in v) document.querySelectorAll('.' + k).forEach((n) => { n.textContent = v[k]; });
+  const o = isOpen(); document.body.classList.toggle('open', o);
+  if (o && !wasOpen) { wasOpen = true; if (cur === 'tree') loadTree(); }
+}
+tick(); setInterval(tick, 1000);
+
+/* ---------- НАВИГАЦИ ---------- */
+const ENV = { home: 'e-home', letter: 'e-letter', story: 'e-letter', tree: 'e-tree', auth: 'e-auth', profile: 'e-prof' };
+function go(name, push = true) {
+  if ((name === 'tree' || name === 'profile') && !me) { after = name; name = 'auth'; }
+  cur = name;
+  document.querySelectorAll('.screen').forEach((s) => s.classList.toggle('on', s.id === 's-' + name));
+  document.querySelectorAll('.env').forEach((e) => e.classList.toggle('on', e.id === ENV[name]));
+  $('nav').classList.toggle('on', ['home', 'tree', 'profile'].includes(name));
+  document.querySelectorAll('.nav-i').forEach((b) => { if (b.dataset.go === name) b.setAttribute('aria-current', 'page'); else b.removeAttribute('aria-current'); });
+  scrollTo(0, 0);
+  if (push) history.pushState({ s: name }, '');
+  if (name === 'tree') loadTree();
+  if (name === 'profile') renderProfile();
+  if (name === 'story') { renderProfile(); drawStory(); }
+  if (name === 'letter') resetLetter();
+}
+addEventListener('popstate', (e) => go((e.state && e.state.s) || 'home', false));
+document.addEventListener('click', (e) => { const b = e.target.closest('[data-go]'); if (b) go(b.dataset.go); });
+
+/* ---------- НЭВТРЭХ ---------- */
+function setErr(id, m) { $(id).textContent = m || ''; }
+function mapErr(err) {
+  const m = (err && err.message || '').toLowerCase();
+  if (m.includes('already') || m.includes('registered')) return 'Энэ нэр аль хэдийн авагдсан байна';
+  if (m.includes('invalid login') || m.includes('invalid credentials')) return 'Нэр эсвэл нууц үг буруу байна';
+  if (m.includes('confirm')) return 'Бүртгэл баталгаажаагүй байна. Supabase дээр "Confirm email"-ийг унтраана уу';
+  if (m.includes('network') || m.includes('fetch')) return 'Интернэт холболтоо шалгана уу';
+  return 'Алдаа гарлаа. Дахин оролдоно уу';
+}
+function setMode(m) {
+  mode = m;
+  $('tabLogin').setAttribute('aria-selected', m === 'login'); $('tabReg').setAttribute('aria-selected', m === 'reg');
+  $('authBtn').textContent = m === 'login' ? 'Нэвтрэх' : 'Бүртгүүлэх';
+  $('ap').autocomplete = m === 'login' ? 'current-password' : 'new-password'; setErr('aerr');
+}
+$('tabLogin').onclick = () => setMode('login'); $('tabReg').onclick = () => setMode('reg');
+async function loadMe() {
+  if (!sb) { me = null; return; }
+  const { data } = await sb.auth.getSession(); const s = data && data.session;
+  if (!s) { me = null; return; }
+  let r = await sb.from('profiles').select('username').eq('id', s.user.id).maybeSingle();
+  if (!r.data) { await sb.rpc('claim_username'); r = await sb.from('profiles').select('username').eq('id', s.user.id).maybeSingle(); }
+  me = r.data ? { id: s.user.id, username: r.data.username } : null;
+}
+$('authForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  if (!sb) return setErr('aerr', 'Сайтын тохиргоо дутуу байна');
+  const u = $('au').value.trim().toLowerCase(), p = $('ap').value;
+  if (!/^[a-z0-9_]{3,20}$/.test(u)) return setErr('aerr', 'Нэр: 3–20 тэмдэгт, зөвхөн a-z, 0-9, _');
+  if (p.length < 6) return setErr('aerr', 'Нууц үг дор хаяж 6 тэмдэгт байна');
+  setErr('aerr'); $('authBtn').disabled = true;
+  try {
+    if (mode === 'reg') {
+      const r = await sb.auth.signUp({ email: u + DOMAIN, password: p }); if (r.error) throw r.error;
+      if (!r.data.session) { const l = await sb.auth.signInWithPassword({ email: u + DOMAIN, password: p }); if (l.error) throw new Error('confirm'); }
+      await sb.rpc('claim_username');
+    } else {
+      const l = await sb.auth.signInWithPassword({ email: u + DOMAIN, password: p }); if (l.error) throw l.error;
+    }
+    await loadMe();
+    if (!me) throw new Error('Алдаа');
+    $('ap').value = ''; const t = after || 'tree'; after = null; go(t);
+  } catch (err) { setErr('aerr', mapErr(err)); }
+  $('authBtn').disabled = false;
+});
+$('outBtn').onclick = async () => { if (sb) await sb.auth.signOut(); me = null; sealed = []; letters = []; toast('Гарлаа'); go('home'); };
+
+/* ---------- ЗАХИА ИЛГЭЭХ ---------- */
+const preset = (new URLSearchParams(location.search).get('to') || '').toLowerCase().replace(/[^a-z0-9_]/g, '').slice(0, 20);
+function resetLetter() {
+  $('letterForm').style.display = ''; $('letterDone').style.display = 'none'; setErr('lerr');
+  if (preset) { $('to').value = preset; $('to').readOnly = true; }
+}
+$('anon').addEventListener('change', () => { $('fromWrap').style.display = $('anon').checked ? 'none' : 'block'; });
+$('msg').addEventListener('input', () => { $('cnt').textContent = $('msg').value.length + ' / 500'; });
+$('sendBtn').onclick = async () => {
+  if (!sb) return setErr('lerr', 'Сайтын тохиргоо дутуу байна');
+  const to = $('to').value.trim().toLowerCase().replace(/^@/, ''), msg = $('msg').value.trim();
+  const name = $('anon').checked ? '' : $('from').value.trim();
+  if (!/^[a-z0-9_]{3,20}$/.test(to)) return setErr('lerr', 'Хэнд илгээхээ зөв бичнэ үү');
+  if (!msg) return setErr('lerr', 'Хүслээ бичнэ үү');
+  if (!$('anon').checked && !name) return setErr('lerr', 'Нэрээ бичнэ үү эсвэл нууцлах сонголтыг асаана уу');
+  setErr('lerr'); $('sendBtn').disabled = true;
+  const { error } = await sb.rpc('send_letter', { to_username: to, msg, sender: name });
+  $('sendBtn').disabled = false;
+  if (error) {
+    const m = error.message || '';
+    return setErr('lerr', m.includes('no_user') ? 'Ийм хэрэглэгч олдсонгүй' : m.includes('full') ? 'Энэ гацуур дүүрсэн байна' : 'Илгээж чадсангүй. Дахин оролдоно уу');
+  }
+  $('msg').value = ''; $('cnt').textContent = '0 / 500';
+  $('letterForm').style.display = 'none'; $('letterDone').style.display = 'block';
+};
+$('againBtn').onclick = resetLetter;
+
+/* ---------- ГАЦУУР ---------- */
+function fmt(d) { const t = new Date(d); return `${pad(t.getMonth() + 1)}/${pad(t.getDate())} ${pad(t.getHours())}:${pad(t.getMinutes())}`; }
+function drawBig() { const box = $('bigTree'); box.innerHTML = treeSVG(288, 317, 'Битүүмжилсэн дугтуйнуудаар чимсэн гацуур'); ornaments(box, sealed.length, true); }
+function redrawTrees() {
+  const h = $('heroTree'); h.innerHTML = treeSVG(190, 209, 'Шинэ жилийн гацуур'); ornaments(h, 5, false);
+  const d = $('doneTree'); d.innerHTML = treeSVG(200, 220, 'Дугтуй битүүмжлэгдлээ'); ornaments(d, 6, false);
+  drawBig();
+}
+function renderOpts() {
+  const G = [['light', 'Гэрэл', [['gold', 'Алтан'], ['multi', 'Өнгөт'], ['white', 'Цагаан']]], ['orn', 'Чимэг бөмбөлөг', [['gold', 'Алтан'], ['red', 'Улаан'], ['silver', 'Мөнгөн']]], ['top', 'Оройн чимэг', [['star', 'Од'], ['bow', 'Нялуурга']]]];
+  const w = $('opts'); w.textContent = '';
+  G.forEach(([k, t, o]) => { w.appendChild(el('div', 'flab', t)); const r = el('div', 'tabs'); r.style.marginTop = '0'; o.forEach(([v, n]) => { const b = el('button', 'tab', n); b.setAttribute('aria-pressed', CFG[k] === v); b.setAttribute('aria-selected', CFG[k] === v); b.onclick = () => { CFG[k] = v; try { localStorage.setItem('dugtui_tree', JSON.stringify(CFG)); } catch (e) { } redrawTrees(); renderOpts(); }; r.appendChild(b); }); w.appendChild(r); });
+}
+async function loadTree() {
+  renderOpts();
+  const box = $('bigTree'), list = $('lettersList');
+  box.innerHTML = treeSVG(288, 317, 'Битүүмжилсэн дугтуйнуудаар чимсэн гацуур');
+  list.textContent = '';
+  if (!sb || !me) return;
+  list.appendChild(el('p', 'pnote', 'Ачаалж байна...'));
+  const r = await sb.rpc('my_sealed'); sealed = (r.data || []);
+  letters = [];
+  if (isOpen() && sealed.length) { const q = await sb.from('letters').select('id,body,from_name,created_at').order('created_at', { ascending: true }); letters = q.data || []; }
+  drawBig();
+  list.textContent = '';
+  $('listTitle').textContent = `Танд ирсэн дугтуй (${sealed.length})`;
+  if (!sealed.length) { const c = el('div', 'card cap cap-c lrow'); const w = el('div'); w.appendChild(el('p', 'lbody', 'Одоохондоо дугтуй ирээгүй байна. Профайлаасаа линкээ хуваалцаарай.')); c.appendChild(w); list.appendChild(c); return; }
+  const open = isOpen() && letters.length;
+  const items = open ? letters : sealed;
+  items.slice(0, 60).forEach((it, i) => {
+    const c = el('div', 'card cap cap-c lrow'); const w = el('div');
+    if (open) { w.appendChild(el('div', 'lmeta', `${it.from_name ? 'Илгээгч: ' + it.from_name : 'Нууц илгээгч'} · ${fmt(it.created_at)}`)); w.appendChild(el('p', 'lbody', it.body)); }
+    else { w.appendChild(el('div', 'lmeta', `Дугтуй №${i + 1} · ${fmt(it.created_at)}`)); w.appendChild(el('p', 'lbody', 'Битүүмжлэгдсэн. 12/31 00:00-д нээгдэнэ.')); c.insertAdjacentHTML('afterbegin', '<svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>'); }
+    c.appendChild(w); list.appendChild(c);
+  });
+  if (isOpen() && !letters.length) list.appendChild(el('p', 'pnote', 'Серверийн цаг дөхөөгүй байна. Түр хүлээгээд дахин орно уу.'));
+}
+function showModal(i) {
+  const card = $('modalCard'); card.textContent = '';
+  const l = letters[i];
+  if (l) { card.appendChild(el('div', 'lmeta', `${l.from_name ? 'Илгээгч: ' + l.from_name : 'Нууц илгээгч'} · ${fmt(l.created_at)}`)); card.appendChild(el('p', 'lbody', l.body)); }
+  else { card.appendChild(el('h2', 'h', 'Битүүмжлэгдсэн')); card.appendChild(el('p', 'lbody', 'Энэ дугтуй 12-р сарын 31-ны 00:00 цагт нээгдэнэ.')); }
+  const b = el('button', 'btn gold cap', 'Хаах'); b.style.marginTop = '26px'; b.onclick = () => $('modal').classList.remove('on'); card.appendChild(b);
+  $('modal').classList.add('on'); b.focus();
+}
+$('bigTree').addEventListener('click', (e) => { const g = e.target.closest('[data-i]'); if (g) showModal(+g.dataset.i); });
+$('bigTree').addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { const g = e.target.closest('[data-i]'); if (g) { e.preventDefault(); showModal(+g.dataset.i); } } });
+$('modal').addEventListener('click', (e) => { if (e.target === $('modal')) $('modal').classList.remove('on'); });
+
+/* ---------- ПРОФАЙЛ, ЛИНК ---------- */
+function myLink() { return me ? location.origin + location.pathname + '?to=' + me.username : ''; }
+function renderProfile() { if (!me) return; $('pName').textContent = '@' + me.username; $('pLink').textContent = myLink(); }
+async function copyLink() {
+  const t = myLink(); if (!t) return;
+  try { await navigator.clipboard.writeText(t); toast('Линк хуулагдлаа'); }
+  catch (e) { const a = document.createElement('textarea'); a.value = t; document.body.appendChild(a); a.select(); try { document.execCommand('copy'); toast('Линк хуулагдлаа'); } catch (x) { toast(t); } a.remove(); }
+}
+$('copyBtn').onclick = copyLink; $('copyBtn2').onclick = copyLink;
+
+/* ---------- СТОРИГИЙН ЗУРАГ ---------- */
+function rr(x, a, b, w, h, r) { x.beginPath(); x.moveTo(a + r, b); x.arcTo(a + w, b, a + w, b + h, r); x.arcTo(a + w, b + h, a, b + h, r); x.arcTo(a, b + h, a, b, r); x.arcTo(a, b, a + w, b, r); x.closePath(); }
+function snowCap(x, a, b, w) { x.fillStyle = '#fff'; x.shadowColor = 'rgba(255,255,255,.6)'; x.shadowBlur = 14; const k = [.09, .26, .47, .69, .9], rad = [22, 15, 26, 17, 22]; k.forEach((f, i) => { x.beginPath(); x.arc(a + w * f, b + 6, rad[i], 0, 6.283); x.fill(); }); x.fillRect(a + 8, b - 4, w - 16, 18); x.shadowBlur = 0; }
+async function drawStory() {
+  const c = $('storyCanvas'), x = c.getContext('2d'); c.width = 1080; c.height = 1920;
+  try { await document.fonts.load('600 120px "Cormorant Garamond"'); await document.fonts.load('700 40px "Manrope"'); } catch (e) { }
+  const serif = '"Cormorant Garamond",Georgia,serif', sans = '"Manrope",system-ui,sans-serif';
+  let g = x.createLinearGradient(0, 0, 0, 1920); g.addColorStop(0, '#070E26'); g.addColorStop(.55, '#0B1535'); g.addColorStop(1, '#14204F'); x.fillStyle = g; x.fillRect(0, 0, 1080, 1920);
+  g = x.createRadialGradient(540, 760, 0, 540, 760, 620); g.addColorStop(0, 'rgba(230,207,155,.3)'); g.addColorStop(1, 'rgba(230,207,155,0)'); x.fillStyle = g; x.fillRect(0, 0, 1080, 1920);
+  g = x.createRadialGradient(540, 1920, 0, 540, 1920, 800); g.addColorStop(0, 'rgba(110,20,35,.5)'); g.addColorStop(1, 'rgba(110,20,35,0)'); x.fillStyle = g; x.fillRect(0, 0, 1080, 1920);
+  for (let i = 0; i < 90; i++) { const s = Math.sin(i * 12.9898) * 43758.5453, r1 = s - Math.floor(s), s2 = Math.sin(i * 78.233) * 43758.5453, r2 = s2 - Math.floor(s2); x.globalAlpha = .35 + r1 * .6; x.fillStyle = i % 5 ? '#fff' : '#E6CF9B'; x.beginPath(); x.arc(r1 * 1080, r2 * 1920, 2 + r2 * 4, 0, 6.283); x.fill(); }
+  x.globalAlpha = 1; x.textAlign = 'center'; x.textBaseline = 'alphabetic';
+  x.fillStyle = '#E6CF9B'; x.font = `700 34px ${sans}`; x.fillText('Х Ү С Л И Й Н   Д У Г Т У Й', 540, 190);
+  x.fillStyle = '#F1DFB0'; x.font = `600 150px ${serif}`; x.fillText('Надад захиа', 540, 360); x.fillText('илгээгээрэй', 540, 500);
+  x.save(); x.translate(150, 590); x.scale(2.6, 2.6);
+  const P = (pts, col) => { x.fillStyle = col; x.beginPath(); pts.forEach((p, i) => i ? x.lineTo(p[0], p[1]) : x.moveTo(p[0], p[1])); x.closePath(); x.fill(); };
+  const E = (cx, cy, rx, ry, col) => { x.fillStyle = col; x.beginPath(); x.ellipse(cx, cy, rx, ry, 0, 0, 6.283); x.fill(); };
+  P([[150, 28], [208, 106], [92, 106]], '#1E7355'); P([[150, 70], [224, 170], [76, 170]], '#176148'); P([[150, 126], [240, 244], [60, 244]], '#134E3A');
+  E(150, 106, 58, 6, '#fff'); E(150, 170, 74, 7, '#fff'); E(150, 244, 90, 8, '#fff'); E(150, 288, 126, 16, '#F6F9FF');
+  x.fillStyle = '#6E1423'; x.fillRect(140, 244, 20, 22);
+  P([[150, 8], [154.5, 19], [166, 19], [157, 26], [160.5, 38], [150, 31], [139.5, 38], [143, 26], [134, 19], [145.5, 19]], '#F1DFB0');
+  const lc = LIGHTS[CFG.light] || LIGHTS.gold, oc = ORN[CFG.orn] || ORN.gold;
+  lightPts().forEach((p, i) => { const c = lc[i % lc.length]; x.globalAlpha = .25; E(p[0], p[1], 6.5, 6.5, c); x.globalAlpha = 1; E(p[0], p[1], 2.7, 2.7, c); });
+  BALLS.forEach((p) => { E(p[0], p[1], 6, 6, oc[0]); x.strokeStyle = oc[1]; x.lineWidth = 1.4; x.beginPath(); x.arc(p[0], p[1], 6, 0, 6.283); x.stroke(); E(p[0] - 2, p[1] - 2, 1.8, 1.8, '#fff'); });
+  [[150, 74], [128, 104], [172, 104], [112, 140], [150, 136], [188, 140], [122, 182], [160, 176], [196, 184]].forEach((p, i) => {
+    const a = i % 2 ? ['#F4E4B8', '#8A1C2E'] : ['#F6F9FF', '#C9A961'];
+    x.strokeStyle = '#E6CF9B'; x.lineWidth = 1; x.beginPath(); x.moveTo(p[0], p[1]); x.lineTo(p[0], p[1] + 10); x.stroke();
+    x.fillStyle = a[0]; x.fillRect(p[0] - 12, p[1] + 10, 24, 17);
+    x.strokeStyle = a[1]; x.lineWidth = 1.4; x.beginPath(); x.moveTo(p[0] - 12, p[1] + 10); x.lineTo(p[0], p[1] + 19); x.lineTo(p[0] + 12, p[1] + 10); x.stroke();
+    E(p[0], p[1] + 22, 5, 5, '#8A1C2E');
+  });
+  x.restore();
+  rr(x, 90, 1400, 900, 170, 36); x.fillStyle = 'rgba(26,41,94,.92)'; x.fill(); x.strokeStyle = 'rgba(230,207,155,.45)'; x.lineWidth = 3; x.stroke(); snowCap(x, 130, 1400, 820);
+  x.fillStyle = '#F1DFB0'; x.font = `700 46px ${sans}`; x.fillText('Нэрээ нууж бичиж болно', 540, 1475);
+  x.fillStyle = '#D5DCF0'; x.font = `500 36px ${sans}`; x.fillText('Захиа 12-р сарын 31-ны 00:00 цагт л нээгдэнэ', 540, 1535);
+  rr(x, 90, 1640, 900, 130, 34); g = x.createLinearGradient(0, 1640, 0, 1770); g.addColorStop(0, '#F4E4B8'); g.addColorStop(1, '#C9A961'); x.fillStyle = g; x.fill(); snowCap(x, 130, 1640, 820);
+  x.fillStyle = '#0B1535'; x.font = `700 54px ${sans}`; x.fillText('Дугтуй илгээх', 540, 1722);
+  let link = myLink().replace(/^https?:\/\//, '') || '[ТАНЫ ЛИНК]', fs = 40; x.fillStyle = '#E6CF9B';
+  do { x.font = `600 ${fs}px ${sans}`; fs -= 2; } while (x.measureText(link).width > 940 && fs > 18);
+  x.fillText(link, 540, 1840);
+}
+function storyBlob() { return new Promise((r) => $('storyCanvas').toBlob(r, 'image/png')); }
+function dl(b) { const a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = 'khusliin-dugtui-story.png'; document.body.appendChild(a); a.click(); a.remove(); }
+$('saveImg').onclick = async () => { await drawStory(); const b = await storyBlob(); if (!b) return toast('Зураг үүсгэж чадсангүй'); dl(b); toast('Зураг хадгалагдлаа'); };
+$('shareImg').onclick = async () => {
+  await drawStory(); const b = await storyBlob(); if (!b) return toast('Зураг үүсгэж чадсангүй');
+  copyLink();
+  const f = new File([b], 'khusliin-dugtui-story.png', { type: 'image/png' });
+  if (navigator.canShare && navigator.canShare({ files: [f] })) { try { await navigator.share({ files: [f] }); return; } catch (e) { if (e && e.name === 'AbortError') return; } }
+  dl(b); toast('Зураг хадгалагдлаа. Instagram/Facebook сторид сонгоно уу');
+};
+/* ---------- ХӨГЖИМ (music box) ---------- */
+const MEL = [['E4', 1], ['E4', 1], ['E4', 2], ['E4', 1], ['E4', 1], ['E4', 2], ['E4', 1], ['G4', 1], ['C4', 1.5], ['D4', .5], ['E4', 4], ['F4', 1], ['F4', 1], ['F4', 1.5], ['F4', .5], ['F4', 1], ['E4', 1], ['E4', 1], ['E4', .5], ['E4', .5], ['E4', 1], ['D4', 1], ['D4', 1], ['E4', 1], ['D4', 2], ['G4', 2], ['E4', 1], ['E4', 1], ['E4', 2], ['E4', 1], ['E4', 1], ['E4', 2], ['E4', 1], ['G4', 1], ['C4', 1.5], ['D4', .5], ['E4', 4], ['F4', 1], ['F4', 1], ['F4', 1.5], ['F4', .5], ['F4', 1], ['E4', 1], ['E4', 1], ['E4', .5], ['E4', .5], ['G4', 1], ['G4', 1], ['F4', 1], ['D4', 1], ['C4', 4]];
+const FREQ = { C4: 261.63, D4: 293.66, E4: 329.63, F4: 349.23, G4: 392.0 };
+const BEAT = 0.34; let ac = null, nextT = 0, idx = 0, timer = null, musicOn = false;
+function note(f, t, d) {
+  [[1, .16], [2, .05]].forEach(([m, v]) => {
+    const o = ac.createOscillator(), gn = ac.createGain(); o.type = 'sine'; o.frequency.value = f * 2 * m;
+    gn.gain.setValueAtTime(0, t); gn.gain.linearRampToValueAtTime(v, t + .01); gn.gain.exponentialRampToValueAtTime(.0008, t + Math.max(.5, d * 1.6));
+    o.connect(gn); gn.connect(ac.destination); o.start(t); o.stop(t + Math.max(.6, d * 1.7) + .1);
+  });
+}
+function pump() {
+  if (!ac || ac.state !== 'running') return;
+  while (nextT < ac.currentTime + .8) {
+    const [n, b] = MEL[idx]; note(FREQ[n], nextT, b * BEAT); nextT += b * BEAT; idx++;
+    if (idx >= MEL.length) { idx = 0; nextT += BEAT * 3; }
+  }
+}
+async function setMusic(on) {
+  musicOn = on;
+  try { localStorage.setItem('dugtui_music', on ? '1' : '0'); } catch (e) { }
+  $('musBtn').setAttribute('aria-pressed', on); $('musSw').setAttribute('aria-pressed', on);
+  if (on) {
+    const AC = window.AudioContext || window.webkitAudioContext; if (!AC) return toast('Энэ төхөөрөмж хөгжим дэмжихгүй байна');
+    if (!ac) { ac = new AC(); nextT = 0; }
+    try { await ac.resume(); } catch (e) { }
+    if (!nextT || nextT < ac.currentTime) nextT = ac.currentTime + .1;
+    clearInterval(timer); timer = setInterval(pump, 200); pump();
+  } else { clearInterval(timer); if (ac) { try { await ac.suspend(); } catch (e) { } } }
+}
+$('musBtn').onclick = () => setMusic(!musicOn); $('musSw').onclick = () => setMusic(!musicOn);
+try { if (localStorage.getItem('dugtui_music') === '1') { $('musBtn').setAttribute('aria-pressed', 'true'); $('musSw').setAttribute('aria-pressed', 'true'); addEventListener('pointerdown', function f() { removeEventListener('pointerdown', f); if (localStorage.getItem('dugtui_music') === '1') setMusic(true); }, { once: true }); } } catch (e) { }
+
+/* ---------- ЭХЛЭЛ ---------- */
+(async function boot() {
+  if (!CONFIGURED) toast('Сайтын тохиргоо дутуу байна (Supabase)');
+  await loadMe();
+  history.replaceState({ s: 'home' }, '');
+  if (preset) go('letter', false);
+  else go('home', false);
+})();
+</script>
+</body>
+</html>
